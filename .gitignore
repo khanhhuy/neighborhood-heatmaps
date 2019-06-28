@@ -62,3 +62,5 @@ typings/
 
 # parcel caches
 .cache
+
+public/dist
