@@ -1,27 +1,71 @@
 <template>
-  <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="flex-container-column">
+    <top-header class="flex-0"></top-header>
+    <heatmap class="flex-full"></heatmap>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TopHeader from "./components/TopHeader.vue";
+import Heading from "./components/Heading.vue";
+import Heatmap from "./components/Heatmap.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    TopHeader,
+    Heading,
+    Heatmap
   }
-}
+};
 </script>
 
-<style>
+<style lang="sass">
+
+  @import "~bulma/sass/utilities/_all.sass"
+  @import "~bulma/sass/base/_all.sass"
+  @import "~bulma/sass/components/navbar.sass"
+  @import "~bulma/sass/elements/_all.sass"
+  @import "~bulma/sass/grid/_all.sass"
+
+</style>
+
+
+<style lang="scss">
+// Global styles
+
+html,
+body {
+  height: 100%;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dedede;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-full {
+  flex: 1 1 0;
+}
+
+.flex-0 {
+  flex: 0 0 auto;
 }
 </style>
