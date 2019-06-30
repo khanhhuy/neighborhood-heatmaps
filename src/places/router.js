@@ -6,7 +6,7 @@ async function findPlaces(req, res, next) {
   const id = req.params['id'];
 
   try {
-    const cities = await FindPlaceService.findNearby('munich');
+    const cities = await FindPlaceService.findNearby(id);
     res.json(cities);
   } catch (err) {
     console.log(err);

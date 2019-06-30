@@ -49,11 +49,15 @@ class Cache {
           return key.createdAt.valueOf();
         });
 
-        const cachedData = await self.fetch(latestKey.key);
-        resolve({
-          data: cachedData,
-          createdAt: latestKey.createdAt
-        });
+        try {
+          const cachedData = await self.fetch(latestKey.key);
+          resolve({
+            data: cachedData,
+            createdAt: latestKey.createdAt
+          });
+        } catch (err) {
+          reject(err);
+        }
       })
     });
   }

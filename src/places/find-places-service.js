@@ -1,5 +1,6 @@
 const Promise = require('q').Promise;
 const _ = require('lodash');
+const Cache = require('../cache').Cache;
 
 var googleMapsClient = null;
 const CITY_LOCATIONS = require('./city_locations.json')['city_locations'];
@@ -60,7 +61,7 @@ class FindPlacesService {
             throw Error('Over query limit');
           case 'REQUEST_DENIED':
           case 'UNKNOWN_ERROR':
-            throw Error('Unknown error');
+            throw Error(responseErr);
         }
       }
     }
@@ -70,24 +71,37 @@ class FindPlacesService {
 
   // Google Place API only returns 60 results for each location.
   // So we use multiple locations to fetch more result
-  // TODO:
-  //    - We currently use 4 location which are not many
-  //    - Find a way to generate locations automatically
+  //
+  // TODO: We currently use 4 locations for each city which are not many, find a way to generate locations automatically
   // 
   // return [{ name, lat, lng, rating, user_rating_totals }]
-  static async findNearby(city, propertyType = 'restaurant', keyword = '') {
-    const centers = CITY_LOCATIONS[0]['centers'];
+  static async findNearby(cityId, propertyType = 'restaurant', keyword = '', bustCache = false) {
+    const city = _.find(CITY_LOCATIONS, (city) => city.id == cityId);
+    const centers = city.centers;
+
+    const cacheKey = `${city.name}_${cityId}`;
+
+    if (!bustCache) {
+      const cachedData = await Cache.fetchLatest(cacheKey);
+
+      if (cachedData) {
+        const { data, createdAt } = cachedData;
+        return data;
+      }
+    }
+
     const mapClient = this.getMapClient();
 
     let nearbyPlaces = [];
 
     for (let center of centers) {
-      console.log(center);
       const places = await this.fetchPlaces(mapClient, [center['lat'], center['lng']]);
       nearbyPlaces = _.concat(places, nearbyPlaces)
     }
+    nearbyPlaces = _.uniqBy(nearbyPlaces, (place) => place.name);
 
-    return _.uniqBy(nearbyPlaces, (place) => place.name );
+    Cache.setWithDate(cacheKey, nearbyPlaces).then(_.noop);
+    return nearbyPlaces;
   }
 
 }
