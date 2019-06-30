@@ -61,6 +61,7 @@ class FindPlacesService {
             throw Error('Over query limit');
           case 'REQUEST_DENIED':
           case 'UNKNOWN_ERROR':
+            console.error(responseErr);
             throw Error(responseErr);
         }
       }
