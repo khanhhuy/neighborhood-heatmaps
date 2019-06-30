@@ -9,18 +9,18 @@ This project displays a heatmap distribution of a property type in a city. For e
 
 ![restaurant distribution in Berlin](https://raw.githubusercontent.com/khanhhuy/neighborhood-heatmaps/master/public/images/heatmap-berlin.png)
 
-- Current version only supports `restaurants` type
-- Future versions would support more types of property such as pubs, hotels...
+- Current version only supports `restaurant` type
+- More types of property such as pubs, hotels... would be supported in future versions
 
 ## Technologies
 - Server: ExpressJS
 - Client: VueJS
-- Google Maps API
+- Google Maps API, Google Places API
 
 ## How it works
 
-### Retrieiving locations data
-- Data about locations in a city is fetched from Google Places API. For example: restaurants within 5km from the center of Munich
+### Retrieving location data
+- Location data in a city is fetched from Google Places API. For example: restaurants within 5km from the center of Munich
 - Google Places API returns only 60 results for a query. Therefore, I used multiple locations from a city to increase the number of results
 - Retrieving locations data is a really expensive operation (Google charges for each request), so data is cached for 1 day
 
