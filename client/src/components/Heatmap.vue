@@ -1,6 +1,6 @@
 <template>
   <div class="heatmap-wrapper">
-    <location-selection class="location-selection flex-0"></location-selection>
+    <location-selection @input="selectCity" class="location-selection flex-0"></location-selection>
     <div class="heatmap">
       <div id="map"></div>
     </div>
@@ -8,10 +8,24 @@
 </template>
 
 <script>
-
 import LocationSelection from "./LocationSelection.vue";
+import PlacesApi from "../services/PlacesApi";
+import _ from "lodash";
 
-const CITIES = ["Munich", "Hamburg", "Frankfurt", "Berlin"];
+const GRADIENT = [
+  "rgba(124, 119, 255, 0)", //  must have the last color(#7791DF) with opacity 0
+  "#7791DF",
+  "#89C9D8",
+  "#97F5D3",
+  "#98F848",
+  "#BEFF16",
+  "#E4FF00",
+  "#FFFA00",
+  "#EFCD02",
+  "#E46402",
+  "#D4400E",
+  "#FF0000"
+];
 
 export default {
   name: "Heatmap",
@@ -20,28 +34,53 @@ export default {
   },
   data() {
     return {
-      currentCity: CITIES[0],
-      shownMenu: false,
-      cities: CITIES
+      cityId: null,
+      locations: [],
+      centerLat: null,
+      centerLng: null,
+      zoomLevel: 12
     };
   },
   methods: {
     openMenu() {
       this.shownMenu = !this.shownMenu;
     },
-    selectCity(city) {
-      this.currentCity = city;
-      this.shownMenu = false;
+    async fetchLocations() {
+      const locations = await PlacesApi.fetchLocations(this.cityId);
+      this.locations = locations;
+      this.computeMapCenterPoint();
+      this.drawMap();
     },
-    init() {
+    computeMapCenterPoint() {
+      this.centerLat = _.meanBy(this.locations, l => l.lat);
+      this.centerLng = _.meanBy(this.locations, l => l.lng);
+    },
+    selectCity(cityId) {
+      this.cityId = cityId;
+      this.fetchLocations();
+    },
+    buildHeatmapPoints(locations) {
+      return _.map(locations, location => {
+        return {
+          location: new window.google.maps.LatLng(location.lat, location.lng),
+          weight: location.rating
+        };
+      });
+    },
+    drawMap() {
       let map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8
+        center: { lat: this.centerLat, lng: this.centerLng },
+        zoom: this.zoomLevel
+      });
+
+      new google.maps.visualization.HeatmapLayer({
+        data: this.buildHeatmapPoints(this.locations),
+        map: map,
+        radius: 20,
+        gradient: GRADIENT,
+        opacity: 0.75
       });
     }
-  },
-  mounted() {
-    // this.init();
   }
 };
 </script>
@@ -64,7 +103,7 @@ export default {
     margin: auto;
     #map {
       height: 100%;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       border-radius: 4px;
     }
   }

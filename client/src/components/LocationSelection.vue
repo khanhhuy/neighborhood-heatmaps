@@ -1,44 +1,55 @@
 <template>
   <div class="location-selection">
     <span class="is-size-3 location-type">Restaurants distribution in</span>
-    <div class="location-dropdown">
+    <div class="location-dropdown" v-if="cities.length != 0">
       <a
         class="location-selected is-size-3 has-text-weight-semibold"
         @click.prevent="openMenu"
-      >{{currentCity}}</a>
+      >{{currentCity.name}}</a>
       <ul v-show="shownMenu" class="location-menu">
         <li
           class="city-item"
-          :class="{'active': city == currentCity}"
-          @click="selectCity(city)"
+          :class="{'active': city.id == currentCity.id}"
+          @click="selectCity(city.id)"
           v-for="city in cities"
-          :key="city"
-        >{{city}}</li>
+          :key="city.id"
+        >{{city.name}}</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-const CITIES = ["Munich", "Hamburg", "Frankfurt", "Berlin"];
+import PlacesApi from '../services/PlacesApi';
+import _ from 'lodash';
 
 export default {
-  name: "Heatmap",
+  name: "LocationSelection",
   data() {
     return {
-      currentCity: CITIES[0],
+      currentCity: null,
       shownMenu: false,
-      cities: CITIES
+      cities: []
     };
   },
   methods: {
     openMenu() {
       this.shownMenu = !this.shownMenu;
     },
-    selectCity(city) {
-      this.currentCity = city;
+    selectCity(cityId) {
+      this.currentCity = _.find(this.cities, (city) => city.id === cityId);
       this.shownMenu = false;
+      this.$emit('input', cityId);
+    },
+    async init() {
+      const cities = await PlacesApi.fetchCities();
+      this.cities = cities;
+      this.currentCity = cities[0];
+      this.$emit('input', this.currentCity.id);
     }
+  },
+  mounted () {
+    this.init();
   }
 };
 </script>
