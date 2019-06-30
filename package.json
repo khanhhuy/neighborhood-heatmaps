@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --inspect ./bin/www"
+    "start": "node --inspect ./bin/www",
+    "heroku-postbuild": "parcel build client/src/main.es6 -d public/dist"
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
