@@ -6,7 +6,6 @@ This project displays a heatmap distribution of a property type in a city. For e
 - Pubs in Munich
 - Hotels in Munich
 
-
 **Restaurants in Berlin**
 
 ![restaurant distribution in Berlin](https://raw.githubusercontent.com/khanhhuy/neighborhood-heatmaps/master/public/images/heatmap-berlin.png)

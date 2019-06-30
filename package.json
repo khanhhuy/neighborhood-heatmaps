@@ -7,7 +7,8 @@
     "yarn": "1.13.0"
   },
   "scripts": {
-    "start": "node --inspect ./bin/www"
+    "start": "node --inspect ./bin/www",
+    "heroku-postbuild": "mkdir cache_data && cd client && yarn install && yarn global add parcel-bundler && ~/.yarn/bin/parcel build src/main.es6 -d ../public/dist"
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
