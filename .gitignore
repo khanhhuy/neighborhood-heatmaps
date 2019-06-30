@@ -64,3 +64,4 @@ typings/
 .cache
 
 public/dist/
+cache_data/
