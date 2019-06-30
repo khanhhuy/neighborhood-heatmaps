@@ -89,7 +89,7 @@ class FindPlacesService {
 
       if (cachedData) {
         const { data, createdAt } = cachedData;
-        if (moment().subtract(1, 'day') < createdAt) {
+        if (moment().subtract(5, 'day') < createdAt) {
           return data;
         }
       }
