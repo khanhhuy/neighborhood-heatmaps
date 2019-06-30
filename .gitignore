@@ -64,4 +64,6 @@ typings/
 .cache
 
 public/dist/
+
+# for cached places result
 cache_data/

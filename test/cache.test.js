@@ -56,3 +56,13 @@ test('read latest cache file', async (done) => {
 
   done();
 });
+
+test('read null for invalid key', async (done) => {
+  const key = '_random_file_';
+  await Cache.setWithDate(key, data);
+
+  const result = await Cache.fetchLatest('not a key');
+
+  expect(result).toBeNull();
+  done();
+});
