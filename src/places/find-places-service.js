@@ -1,5 +1,7 @@
 const Promise = require('q').Promise;
 const _ = require('lodash');
+const moment = require('moment');
+
 const Cache = require('../cache').Cache;
 
 var googleMapsClient = null;
@@ -87,7 +89,9 @@ class FindPlacesService {
 
       if (cachedData) {
         const { data, createdAt } = cachedData;
-        return data;
+        if (moment().subtract(1, 'day') < createdAt) {
+          return data;
+        }
       }
     }
 
