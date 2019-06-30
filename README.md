@@ -14,7 +14,7 @@ This project displays a heatmap distribution of a property type in a city. For e
 
 ## Technologies
 - Server: ExpressJS
-- Client: VueJS
+- Client: VueJS, Parcel
 - Google Maps API, Google Places API
 
 ## How it works
