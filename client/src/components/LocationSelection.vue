@@ -44,6 +44,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  @import "../stylesheet/var.scss";
+
 .location-selection {
   z-index: 100;
   flex: 0 0 auto;
@@ -55,8 +58,8 @@ export default {
     display: inline;
 
     .location-selected {
-      color: #0078d7;
-      border-bottom: 1px dotted #0078d7;
+      color: #333;
+      border-bottom: 3px solid $brand-2;
       position: absolute;
       left: 5px;
     }
@@ -84,7 +87,7 @@ export default {
           background: #eeeeee;
         }
         &.active {
-          background: #0078d7;
+          background: $brand-2;
           color: #fff;
         }
       }

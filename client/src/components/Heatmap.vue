@@ -1,6 +1,6 @@
 <template>
   <div class="heatmap-wrapper">
-    <location-selection class="flex-0"></location-selection>
+    <location-selection class="location-selection flex-0"></location-selection>
     <div class="heatmap">
       <div id="map"></div>
     </div>
@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    // this.init();
   }
 };
 </script>
@@ -51,14 +51,21 @@ export default {
   display: flex;
   flex-direction: column;
 
+  .location-selection {
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
   .heatmap {
-    padding: 20px;
+    padding: 20px 20px 40px 20px;
     flex: 1 1 0;
     width: 1000px;
     max-width: 100%;
     margin: auto;
     #map {
       height: 100%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      border-radius: 4px;
     }
   }
 }

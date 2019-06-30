@@ -41,6 +41,7 @@ body {
 
 #app {
   height: 100%;
+  background: #f6f9fc;
 }
 
 ::-webkit-scrollbar {
