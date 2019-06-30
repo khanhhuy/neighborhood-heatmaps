@@ -69,4 +69,8 @@ body {
 .flex-0 {
   flex: 0 0 auto;
 }
+
+.margin-left-5 {
+  margin-left: 5px;
+}
 </style>

@@ -11,8 +11,9 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-text">
-                <strong>About</strong>
+              <a class="button is-text" target="_blank" href="https://github.com/khanhhuy/neighborhood-heatmaps">
+                <i class="fab fa-github"></i>
+                <strong class="margin-left-5">Github</strong>
               </a>
             </div>
           </div>
