@@ -3,7 +3,8 @@ const mustacheExpress = require("mustache-express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const routes = require("./routes");
+const routes = require("./src/index");
+const dotenv = require('dotenv').config();
 
 const app = express();
 
