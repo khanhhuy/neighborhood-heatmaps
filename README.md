@@ -23,7 +23,7 @@ This project displays a heatmap distribution of a property type in a city. For e
 ### Retrieving location data
 - Location data in a city is fetched from Google Places API. For example: restaurants within 5km from the center of Munich
 - Google Places API returns only 60 results for a query. Therefore, I used multiple locations from a city to increase the number of results
-- Retrieving locations data is a really expensive operation (Google charges for each request), so data is cached for 1 day
+- Retrieving locations data is a really expensive operation (Google charges for each request), so data is cached for a few day
 
 ### Heatmap visualization
 - All data points is fetched to the Google Heatmaps layer to draw on a map.
