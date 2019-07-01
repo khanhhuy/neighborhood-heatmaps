@@ -18,7 +18,7 @@ async function findPlaces(req, res, next) {
 
 }
 
-// Return list of location/cities supported
+// Return list of cities
 function cities(req, res, next) {
   const cities = _.map(CITY_LOCATIONS, (city) => {
     return {

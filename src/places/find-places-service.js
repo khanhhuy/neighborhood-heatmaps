@@ -34,7 +34,8 @@ class FindPlacesService {
     return places;
   }
 
-  // location: [lat, lng]
+  // Fetch places from Google Places API
+  // @location: [lat, lng]
   static async fetchPlaces(mapClient, location) {
     const self = this;
 
